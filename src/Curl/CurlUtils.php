@@ -49,7 +49,7 @@ trait CurlUtils
             $options[\CURLOPT_URL] = (empty($_params) ? $_url : $_url . '?' . \http_build_query($_params));
         } else {
             $options[\CURLOPT_URL]        = $_url;
-            $options[\CURLOPT_POSTFIELDS] = \http_build_query($_params);
+            $options[\CURLOPT_POSTFIELDS] = $_params;
         }
 
         \curl_setopt_array($ch, $_extra_options + $options + $this->getDefaultCurlParams());
