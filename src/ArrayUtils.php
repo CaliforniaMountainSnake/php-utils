@@ -5,10 +5,43 @@ namespace CaliforniaMountainSnake\UtilTraits;
 trait ArrayUtils
 {
     /**
+     * Change values and keys in the given array recursively keeping the array order.
+     *
+     * @param array    $_array    The original array.
+     * @param callable $_callback The callback function takes 2 parameters (key, value)
+     *                            and returns an array [newKey, newValue] or null if nothing has been changed.
+     *
+     * @return void
+     */
+    protected function modify_array_recursive(array &$_array, callable $_callback): void
+    {
+        $keys = \array_keys($_array);
+        foreach ($keys as $keyIndex => $key) {
+            $value = &$_array[$key];
+            if (\is_array($value)) {
+                $this->modify_array_recursive($value, $_callback);
+                continue;
+            }
+
+            $newKey = $key;
+            $newValue = $value;
+            $newPair = $_callback ($key, $value);
+            if ($newPair !== null) {
+                [$newKey, $newValue] = $newPair;
+            }
+
+            $keys[$keyIndex] = $newKey;
+            $_array[$key] = $newValue;
+        }
+
+        $_array = \array_combine($keys, $_array);
+    }
+
+    /**
      * Recursive \implode().
      *
      * @param string $_glue
-     * @param array $_arr
+     * @param array  $_arr
      *
      * @return string
      */
@@ -29,11 +62,12 @@ trait ArrayUtils
 
     /**
      * Recursive \in_array().
-     * (https://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array).
      *
-     * @param $_needle
+     * @see https://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array
+     *
+     * @param       $_needle
      * @param array $_haystack
-     * @param bool $_strict
+     * @param bool  $_strict
      *
      * @return bool
      */
@@ -43,7 +77,8 @@ trait ArrayUtils
             /** @noinspection TypeUnsafeComparisonInspection */
             /** @noinspection NotOptimalIfConditionsInspection */
             if (($_strict ? $item === $_needle : $item == $_needle)
-                || (\is_array($item) && $this->in_array_recursive($_needle, $item, $_strict))) {
+                || (\is_array($item) && $this->in_array_recursive($_needle, $item, $_strict))
+            ) {
                 return true;
             }
         }

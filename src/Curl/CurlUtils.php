@@ -27,10 +27,10 @@ trait CurlUtils
     /**
      * Execute any HTTP query.
      *
-     * @param RequestMethodEnum $_method Request method.
-     * @param string $_url Target URL.
-     * @param array $_params [OPTIONAL] Request parameters.
-     * @param array $_extra_options [OPTIONAL] Additional \CURLOPT_XXX options.
+     * @param RequestMethodEnum $_method        Request method.
+     * @param string            $_url           Target URL.
+     * @param array             $_params        [OPTIONAL] Request parameters.
+     * @param array             $_extra_options [OPTIONAL] Additional \CURLOPT_XXX options.
      *
      * @return HttpResponse
      */
@@ -40,7 +40,7 @@ trait CurlUtils
         array $_params = [],
         array $_extra_options = []
     ): HttpResponse {
-        $ch      = \curl_init();
+        $ch = \curl_init();
         $options = [
             \CURLOPT_CUSTOMREQUEST => (string)$_method,
         ];
@@ -48,14 +48,14 @@ trait CurlUtils
         if ((string)$_method === RequestMethodEnum::GET) {
             $options[\CURLOPT_URL] = (empty($_params) ? $_url : $_url . '?' . \http_build_query($_params));
         } else {
-            $options[\CURLOPT_URL]        = $_url;
-            $options[\CURLOPT_POSTFIELDS] = $_params;
+            $options[\CURLOPT_URL] = $_url;
+            $options[\CURLOPT_POSTFIELDS] = $this->build_post_fields($_params);
         }
 
         \curl_setopt_array($ch, $_extra_options + $options + $this->getDefaultCurlParams());
 
         $result = curl_exec($ch);
-        $code   = \curl_getinfo($ch, \CURLINFO_HTTP_CODE);
+        $code = \curl_getinfo($ch, \CURLINFO_HTTP_CODE);
 
         \curl_close($ch);
         return new HttpResponse($result, $code);
@@ -64,14 +64,14 @@ trait CurlUtils
     /**
      * Download a file via CURL.
      *
-     * @param   string $_url Files's URL.
+     * @param   string $_url             Files's URL.
      * @param   string $_output_filename The name of the file to which the target file will be saved.
      *
-     * @return  bool Is the file downloaded successfully?
+     * @return  bool Did the file download successfully?
      */
     protected function downloadFile(string $_url, string $_output_filename): bool
     {
-        $ch      = \curl_init();
+        $ch = \curl_init();
         $options = [
             \CURLOPT_URL => $_url,
         ];
@@ -90,5 +90,34 @@ trait CurlUtils
 
         \curl_close($ch);
         return true;
+    }
+
+    /**
+     * Use this to send data with multidimensional arrays and CURLFiles
+     *  `curl_setopt($ch, CURLOPT_POSTFIELDS, build_post_fields($postfields));`
+     *
+     * @param        $_data
+     * @param string $_existing_keys - will set the paramater name, probably don't want to use
+     * @param array  $_return_array  - Can pass data to start with, only put good data here
+     *
+     * @return array
+     *
+     * @author Yisrael Dov Lebow <lebow@lebowtech.com>
+     * @see    https://gist.github.com/yisraeldov/ec29d520062575c204be7ab71d3ecd2f
+     * @see    https://stackoverflow.com/questions/3453353/how-to-upload-files-multipart-form-data-with-multidimensional-postfields-using
+     * @see    http://stackoverflow.com/questions/35000754/array-2-string-conversion-while-using-curlopt-postfields/35002423#comment69460359_35002423
+     */
+    protected function build_post_fields($_data, $_existing_keys = '', &$_return_array = []): array
+    {
+        if (($_data instanceof \CURLFile) || !(\is_array($_data) || \is_object($_data))) {
+            $_return_array[$_existing_keys] = $_data;
+            return $_return_array;
+        }
+
+        foreach ($_data as $key => $item) {
+            $existingKeys = $_existing_keys ? $_existing_keys . "[$key]" : $key;
+            $this->build_post_fields($item, $existingKeys, $_return_array);
+        }
+        return $_return_array;
     }
 }

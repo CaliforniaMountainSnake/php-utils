@@ -13,6 +13,7 @@ class IntegrationTestCase extends TestCase
 {
     public const WEBSERVER_HOST = 'localhost';
     public const WEBSERVER_PORT = 18080;
+    public const WEBSERVER_WAIT_TIME_MICROSECONDS = 100000;
 
     /**
      * @var Process
@@ -27,14 +28,14 @@ class IntegrationTestCase extends TestCase
         self::$webServerProcess = new Process([
             'php',
             '-S',
-            self::WEBSERVER_HOST . ':' . self::WEBSERVER_PORT,
+            static::WEBSERVER_HOST . ':' . static::WEBSERVER_PORT,
             '-t',
-            \dirname(__FILE__)
+            __DIR__
         ]);
         self::$webServerProcess->start();
-        usleep(100000); //wait for server to get going
+        usleep(static::WEBSERVER_WAIT_TIME_MICROSECONDS); //wait for server to get going
 
-        echo "\n#webserver deployed at " . self::WEBSERVER_HOST . ':' . self::WEBSERVER_PORT . "#\n";
+        echo "\n#webserver deployed at " . static::WEBSERVER_HOST . ':' . static::WEBSERVER_PORT . "#\n";
     }
 
     /**
@@ -51,7 +52,7 @@ class IntegrationTestCase extends TestCase
      */
     public static function getWebserverRootUrl(): string
     {
-        return 'http://' . self::WEBSERVER_HOST . ':' . self::WEBSERVER_PORT;
+        return 'http://' . static::WEBSERVER_HOST . ':' . static::WEBSERVER_PORT;
     }
 
     /**
@@ -59,6 +60,6 @@ class IntegrationTestCase extends TestCase
      */
     public static function getRequestInfoUrl(): string
     {
-        return self::getWebserverRootUrl() . '/show_request_info.php';
+        return static::getWebserverRootUrl() . '/show_request_info.php';
     }
 }

@@ -4,18 +4,30 @@ namespace CaliforniaMountainSnake\UtilTraits\Curl;
 
 trait CurlHttpMethods
 {
+    /**
+     * Execute any http request.
+     *
+     * @param RequestMethodEnum $_method
+     * @param string            $_url
+     * @param array             $_params
+     * @param array             $_extra_options
+     *
+     * @return HttpResponse
+     */
     abstract protected function httpQuery(
         RequestMethodEnum $_method,
         string $_url,
         array $_params = [],
         array $_extra_options = []
     ): HttpResponse;
-    
+
     /**
-     * Execute GET query.
+     * Execute GET request.
+     *
      * @param string $_url
-     * @param array $_params
-     * @param array $_extra_options
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
      * @return HttpResponse
      */
     protected function getQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
@@ -24,10 +36,12 @@ trait CurlHttpMethods
     }
 
     /**
-     * Execute POST query.
+     * Execute POST request.
+     *
      * @param string $_url
-     * @param array $_params
-     * @param array $_extra_options
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
      * @return HttpResponse
      */
     protected function postQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
@@ -36,10 +50,12 @@ trait CurlHttpMethods
     }
 
     /**
-     * Execute PUT query.
+     * Execute PUT request.
+     *
      * @param string $_url
-     * @param array $_params
-     * @param array $_extra_options
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
      * @return HttpResponse
      */
     protected function putQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
@@ -48,10 +64,12 @@ trait CurlHttpMethods
     }
 
     /**
-     * Execute DELETE query.
+     * Execute DELETE request.
+     *
      * @param string $_url
-     * @param array $_params
-     * @param array $_extra_options
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
      * @return HttpResponse
      */
     protected function deleteQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse

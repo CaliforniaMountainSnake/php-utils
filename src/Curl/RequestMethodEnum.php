@@ -6,9 +6,9 @@ use MyCLabs\Enum\Enum;
 
 class RequestMethodEnum extends Enum
 {
-    public const GET    = 'GET';
-    public const POST   = 'POST';
-    public const PUT    = 'PUT';
+    public const GET = 'GET';
+    public const POST = 'POST';
+    public const PUT = 'PUT';
     public const DELETE = 'DELETE';
 
     //--------------------------------------------------------------------------

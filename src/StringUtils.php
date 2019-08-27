@@ -6,7 +6,9 @@ trait StringUtils
 {
     /**
      * Get classname without namespace.
+     *
      * @param $_classname_or_object
+     *
      * @return string
      * @throws \ReflectionException
      */
@@ -18,9 +20,11 @@ trait StringUtils
 
     /**
      * Get human readable filesize.
-     * https://stackoverflow.com/questions/15188033/human-readable-file-size
+     *
+     * @see https://stackoverflow.com/questions/15188033/human-readable-file-size
      *
      * @param int $_size_in_bytes
+     *
      * @return string
      */
     protected function getHumanReadableFileSize(int $_size_in_bytes): string
@@ -32,7 +36,7 @@ trait StringUtils
         $s = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
         $e = \floor(\log($_size_in_bytes, 1024));
 
-        return \round($_size_in_bytes / (1024 ** $e), 2) . ' ' . $s[$e];
+        return \round($_size_in_bytes / (1024 ** $e), 2) . ' ' . $s[(string)$e];
     }
 
 }

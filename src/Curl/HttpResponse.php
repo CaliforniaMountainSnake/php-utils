@@ -16,13 +16,14 @@ class HttpResponse
 
     /**
      * HttpResponse constructor.
+     *
      * @param string $_content
-     * @param int $_code
+     * @param int    $_code
      */
     public function __construct(string $_content, int $_code)
     {
         $this->content = $_content;
-        $this->code    = $_code;
+        $this->code = $_code;
     }
 
     public function __debugInfo()
@@ -50,6 +51,13 @@ class HttpResponse
         return $this->code;
     }
 
+    /**
+     * @param bool $_assoc
+     * @param int  $_depth
+     * @param int  $_options
+     *
+     * @return array|null
+     */
     public function jsonDecode(bool $_assoc = true, int $_depth = 512, int $_options = 0): ?array
     {
         $array = \json_decode($this->content, $_assoc, $_depth, $_options);
