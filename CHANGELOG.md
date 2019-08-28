@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.3] - 2019-08-28
+### Added
+- Added the ArrayUtils::array_keys_recursive() method.
+
 ## [1.0.2] - 2019-08-27
 ### Added
 - CurlUtils now can successfully execute post requests with multidimensional params' arrays with files (and get requests with multidimensional params' arrays).
