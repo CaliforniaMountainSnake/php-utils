@@ -16,16 +16,17 @@ class CurlUtilsTest extends IntegrationTestCase
      */
     public function testGetQuery(): void
     {
-        $param1_name = 'param1';
-        $param1_value = 'Юникод 1!';
-        $response1 = $this->getQuery(self::getRequestInfoUrl(), [
-            $param1_name => $param1_value
-        ]);
-        $info1 = $response1->jsonDecode();
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
 
-        $this->assertEquals(200, $response1->getCode());
-        $this->assertEquals('GET', $info1['SERVER']['REQUEST_METHOD']);
-        $this->assertEquals($param1_value, $info1['GET'][$param1_name]);
+        $response = $this->getQuery(self::getRequestInfoUrl(), $get_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('GET', $responseArr['SERVER']['REQUEST_METHOD']);
     }
 
     /**
@@ -34,16 +35,22 @@ class CurlUtilsTest extends IntegrationTestCase
      */
     public function testPostQuery(): void
     {
-        $param1_name = 'param1';
-        $param1_value = 'Юникод 1!';
-        $response1 = $this->postQuery(self::getRequestInfoUrl(), [
-            $param1_name => $param1_value
-        ]);
-        $info1 = $response1->jsonDecode();
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $post_params = [
+            'post_param_1' => 'Юникод 1!',
+            'post_param_2' => 'Юникод 2!',
+        ];
 
-        $this->assertEquals(200, $response1->getCode());
-        $this->assertEquals('POST', $info1['SERVER']['REQUEST_METHOD']);
-        $this->assertEquals($param1_value, $info1['POST'][$param1_name]);
+        $response = $this->postQuery(self::getRequestInfoUrl($get_params), $post_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($post_params, $responseArr['POST']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('POST', $responseArr['SERVER']['REQUEST_METHOD']);
     }
 
     /**
@@ -52,15 +59,22 @@ class CurlUtilsTest extends IntegrationTestCase
      */
     public function testPutQuery(): void
     {
-        $param1_name = 'param1';
-        $param1_value = 'Юникод 1!';
-        $response1 = $this->putQuery(self::getRequestInfoUrl(), [
-            $param1_name => $param1_value
-        ]);
-        $info1 = $response1->jsonDecode();
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $put_params = [
+            'put_param_1' => 'Юникод 1!',
+            'put_param_2' => 'Юникод 2!',
+        ];
 
-        $this->assertEquals(200, $response1->getCode());
-        $this->assertEquals('PUT', $info1['SERVER']['REQUEST_METHOD']);
+        $response = $this->putQuery(self::getRequestInfoUrl($get_params), $put_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($put_params, $responseArr['PUT']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('PUT', $responseArr['SERVER']['REQUEST_METHOD']);
     }
 
     /**
@@ -69,41 +83,102 @@ class CurlUtilsTest extends IntegrationTestCase
      */
     public function testDeleteQuery(): void
     {
-        $param1_name = 'param1';
-        $param1_value = 'Юникод 1!';
-        $response1 = $this->deleteQuery(self::getRequestInfoUrl(), [
-            $param1_name => $param1_value
-        ]);
-        $info1 = $response1->jsonDecode();
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $delete_params = [
+            'put_param_1' => 'Юникод 1!',
+            'put_param_2' => 'Юникод 2!',
+        ];
 
-        $this->assertEquals(200, $response1->getCode());
-        $this->assertEquals('DELETE', $info1['SERVER']['REQUEST_METHOD']);
+        $response = $this->deleteQuery(self::getRequestInfoUrl($get_params), $delete_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($delete_params, $responseArr['DELETE']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('DELETE', $responseArr['SERVER']['REQUEST_METHOD']);
+    }
+
+    /**
+     * @covers CurlUtils::patchQuery
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testPatchQuery(): void
+    {
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $patch_params = [
+            'put_param_1' => 'Юникод 1!',
+            'put_param_2' => 'Юникод 2!',
+        ];
+
+        $response = $this->patchQuery(self::getRequestInfoUrl($get_params), $patch_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($patch_params, $responseArr['PATCH']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('PATCH', $responseArr['SERVER']['REQUEST_METHOD']);
+    }
+
+    /**
+     * @covers CurlUtils::optionsQuery
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testOptionsQuery(): void
+    {
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $options_params = [
+            'put_param_1' => 'Юникод 1!',
+            'put_param_2' => 'Юникод 2!',
+        ];
+
+        $response = $this->optionsQuery(self::getRequestInfoUrl($get_params), $options_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($options_params, $responseArr['OPTIONS']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('OPTIONS', $responseArr['SERVER']['REQUEST_METHOD']);
     }
 
     /**
      * @covers CurlUtils::httpQuery
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testHttpQuery(): void
+    public function testHeaders(): void
     {
-        $param1_name = 'param1';
-        $param1_value = 'Юникод 1!';
-        $referer_1 = 'custom referer!';
-        $user_agent_1 = 'custom user-agent!';
+        $referer = 'custom referer!';
+        $user_agent = 'custom user-agent!';
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $post_params = [
+            'post_param_1' => 'Юникод 1!',
+            'post_param_2' => 'Юникод 2!',
+        ];
 
-        $response1 = $this->httpQuery(RequestMethodEnum::POST(), self::getRequestInfoUrl(), [
-            $param1_name => $param1_value
-        ], [
-            \CURLOPT_REFERER => $referer_1,
-            \CURLOPT_USERAGENT => $user_agent_1,
-        ]);
-        $info1 = $response1->jsonDecode();
+        $response = $this->httpQuery(RequestMethodEnum::POST(), self::getRequestInfoUrl($get_params),
+            $post_params, [
+                \CURLOPT_REFERER => $referer,
+                \CURLOPT_USERAGENT => $user_agent,
+            ]);
+        $responseArr = $response->jsonDecode();
 
-        $this->assertEquals(200, $response1->getCode());
-        $this->assertEquals('POST', $info1['SERVER']['REQUEST_METHOD']);
-        $this->assertEquals($param1_value, $info1['POST'][$param1_name]);
-        $this->assertEquals($referer_1, $info1['SERVER']['HTTP_REFERER']);
-        $this->assertEquals($user_agent_1, $info1['SERVER']['HTTP_USER_AGENT']);
+        $this->assertEquals($referer, $responseArr['SERVER']['HTTP_REFERER']);
+        $this->assertEquals($user_agent, $responseArr['SERVER']['HTTP_USER_AGENT']);
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($post_params, $responseArr['POST']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('POST', $responseArr['SERVER']['REQUEST_METHOD']);
     }
 
     /**

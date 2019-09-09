@@ -76,4 +76,32 @@ trait CurlHttpMethods
     {
         return $this->httpQuery(RequestMethodEnum::DELETE(), $_url, $_params, $_extra_options);
     }
+
+    /**
+     * Execute PATCH request.
+     *
+     * @param string $_url
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
+     * @return HttpResponse
+     */
+    protected function patchQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
+    {
+        return $this->httpQuery(RequestMethodEnum::PATCH(), $_url, $_params, $_extra_options);
+    }
+
+    /**
+     * Execute OPTIONS request.
+     *
+     * @param string $_url
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
+     * @return HttpResponse
+     */
+    protected function optionsQuery(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
+    {
+        return $this->httpQuery(RequestMethodEnum::OPTIONS(), $_url, $_params, $_extra_options);
+    }
 }

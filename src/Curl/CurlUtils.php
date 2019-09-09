@@ -27,6 +27,9 @@ trait CurlUtils
     /**
      * Execute any HTTP query.
      *
+     * Warning! All queries have "application/x-www-form-urlencoded" encoding.
+     * Only POST query have "multipart/form-data" encoding if it has files.
+     *
      * @param RequestMethodEnum $_method        Request method.
      * @param string            $_url           Target URL.
      * @param array             $_params        [OPTIONAL] Request parameters.
@@ -40,17 +43,24 @@ trait CurlUtils
         array $_params = [],
         array $_extra_options = []
     ): HttpResponse {
+        $method = (string)$_method;
         $ch = \curl_init();
         $options = [
-            \CURLOPT_CUSTOMREQUEST => (string)$_method,
+            \CURLOPT_CUSTOMREQUEST => $method,
+            \CURLOPT_URL => $_url,
         ];
 
-        if ((string)$_method === RequestMethodEnum::GET) {
+        if ($method === RequestMethodEnum::GET) {
+            // Just GET.
             $options[\CURLOPT_URL] = (empty($_params) ? $_url : $_url . '?' . \http_build_query($_params));
-        } else {
-            $options[\CURLOPT_URL] = $_url;
+        } elseif ($method === RequestMethodEnum::POST) {
+            // Encoding files.
             $options[\CURLOPT_POSTFIELDS] = $this->build_post_fields($_params);
+        } else {
+            // Simple form-encoded.
+            $options[\CURLOPT_POSTFIELDS] = \http_build_query($_params);
         }
+
 
         \curl_setopt_array($ch, $_extra_options + $options + $this->getDefaultCurlParams());
 

@@ -56,10 +56,13 @@ class IntegrationTestCase extends TestCase
     }
 
     /**
+     * @param array|null $_get_params
+     *
      * @return string
      */
-    public static function getRequestInfoUrl(): string
+    public static function getRequestInfoUrl(array $_get_params = null): string
     {
-        return static::getWebserverRootUrl() . '/show_request_info.php';
+        $getParams = ($_get_params === null ? '' : '?' . \http_build_query($_get_params));
+        return static::getWebserverRootUrl() . '/show_request_info.php' . $getParams;
     }
 }

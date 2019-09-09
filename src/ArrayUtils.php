@@ -55,6 +55,23 @@ trait ArrayUtils
     }
 
     /**
+     * Get all values of the multidimensional array.
+     *
+     * @param array $_arr
+     *
+     * @return array
+     */
+    public function array_values_recursive(array &$_arr): array
+    {
+        $result = [];
+        \array_walk_recursive($_arr, static function (&$value, &$key) use (&$result) {
+            $result[$key] = $value;
+        });
+
+        return $result;
+    }
+
+    /**
      * Recursive \implode().
      *
      * @param string $_glue

@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.4] - 2019-09-09
+### Added
+- Added the support of PATCH and OPTIONS http queries.
+- Added the ArrayUtils::array_values_recursive() method.
+### Changed
+- The CurlUtilsTest has been improved.
+### Fixed
+- Fix the PUT (and ony other except GET/POST) request execution.
+
 ## [1.0.3] - 2019-08-28
 ### Added
 - Added the ArrayUtils::array_keys_recursive() method.
