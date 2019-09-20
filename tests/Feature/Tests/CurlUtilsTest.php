@@ -54,6 +54,29 @@ class CurlUtilsTest extends IntegrationTestCase
     }
 
     /**
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testPostJsonQuery(): void
+    {
+        $get_params = [
+            'get_param_1' => 'Юникод 1!',
+            'get_param_2' => 'Юникод 2!',
+        ];
+        $post_params = [
+            'post_param_1' => 'Юникод 1!',
+            'post_param_2' => 'Юникод 2!',
+        ];
+
+        $response = $this->postJson(self::getRequestInfoUrl($get_params), $post_params);
+        $responseArr = $response->jsonDecode();
+
+        $this->assertEquals($get_params, $responseArr['GET']);
+        $this->assertEquals($post_params, $responseArr['INPUT_DATA_JSON_DECODED']);
+        $this->assertEquals(200, $response->getCode());
+        $this->assertEquals('POST', $responseArr['SERVER']['REQUEST_METHOD']);
+    }
+
+    /**
      * @covers CurlUtils::putQuery
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */

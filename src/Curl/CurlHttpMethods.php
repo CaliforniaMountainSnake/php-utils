@@ -50,6 +50,24 @@ trait CurlHttpMethods
     }
 
     /**
+     * Execute POST Json request.
+     *
+     * @param string $_url
+     * @param array  $_params
+     * @param array  $_extra_options
+     *
+     * @return HttpResponse
+     */
+    protected function postJson(string $_url, array $_params = [], array $_extra_options = []): HttpResponse
+    {
+        $_extra_options[\CURLOPT_HTTPHEADER] = \array_merge($_extra_options[\CURLOPT_HTTPHEADER] ?? [], [
+            'Content-Type: application/json',
+        ]);
+
+        return $this->httpQuery(RequestMethodEnum::POST(), $_url, $_params, $_extra_options);
+    }
+
+    /**
      * Execute PUT request.
      *
      * @param string $_url

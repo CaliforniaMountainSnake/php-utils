@@ -27,8 +27,8 @@ trait CurlUtils
     /**
      * Execute any HTTP query.
      *
-     * Warning! All queries have "application/x-www-form-urlencoded" encoding.
-     * Only POST query have "multipart/form-data" encoding if it has files.
+     * All queries by default have "application/x-www-form-urlencoded" encoding.
+     * POST query have "multipart/form-data" encoding if it has files.
      *
      * @param RequestMethodEnum $_method        Request method.
      * @param string            $_url           Target URL.
@@ -50,7 +50,10 @@ trait CurlUtils
             \CURLOPT_URL => $_url,
         ];
 
-        if ($method === RequestMethodEnum::GET) {
+        if ($this->isJsonRequest($_extra_options)) {
+            // Encode params to json.
+            $options[\CURLOPT_POSTFIELDS] = \json_encode($_params);
+        } elseif ($method === RequestMethodEnum::GET) {
             // Just GET.
             $options[\CURLOPT_URL] = (empty($_params) ? $_url : $_url . '?' . \http_build_query($_params));
         } elseif ($method === RequestMethodEnum::POST) {
@@ -129,5 +132,25 @@ trait CurlUtils
             $this->build_post_fields($item, $existingKeys, $_return_array);
         }
         return $_return_array;
+    }
+
+    /**
+     * @param array $_extra_options
+     *
+     * @return bool
+     */
+    private function isJsonRequest(array $_extra_options): bool
+    {
+        $jsonContentType = 'content-type:application/json';
+
+        $headers = $_extra_options[\CURLOPT_HTTPHEADER] ?? [];
+        foreach ($headers as $header) {
+            $header = \str_replace(' ', '', \mb_strtolower(\trim($header)));
+            if ($header === $jsonContentType) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

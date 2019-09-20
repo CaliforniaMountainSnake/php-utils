@@ -1,7 +1,9 @@
 <?php
 
 // Get PUT/DELETE data.
-\parse_str(\file_get_contents('php://input'), $inputData);
+$rawInput = \file_get_contents('php://input');
+\parse_str($rawInput, $inputData);
+$jsonInputDecoded = \json_decode($rawInput, true);
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $arr = [
@@ -10,7 +12,10 @@ $arr = [
         'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'],
         'HTTP_REFERER' => $_SERVER['HTTP_REFERER'],
         'REQUEST_METHOD' => $requestMethod,
+        'CONTENT_TYPE' => $_SERVER['CONTENT_TYPE'],
     ],
+    'INPUT_DATA' => $inputData,
+    'INPUT_DATA_JSON_DECODED' => $jsonInputDecoded,
     'GET' => $_GET,
     'POST' => $_POST,
     'PUT' => $requestMethod === 'PUT' ? $inputData : [],

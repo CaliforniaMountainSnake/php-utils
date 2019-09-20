@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.5] - 2019-09-20
+### Added
+- Added the support of json request body in the CurlUtils::httpQuery().
+- Added the CurlHttpMethods::postJson() method.
+### Changed
+- Added the ext-mbstring dependence in the composer.json.
+
 ## [1.0.4] - 2019-09-09
 ### Added
 - Added the support of PATCH and OPTIONS http queries.
