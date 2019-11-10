@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.6] - 2019-10-11
+### Added
+- Added ArrayUtils::get_array_value_or_null() method.
+
 ## [1.0.5] - 2019-09-20
 ### Added
 - Added the support of json request body in the CurlUtils::httpQuery().

@@ -120,4 +120,25 @@ trait ArrayUtils
         return false;
     }
 
+    /**
+     * Get a value from multidimensional array or null if it does not exists.
+     *
+     * @param array  $_array
+     * @param string ...$_keys
+     *
+     * @return array|mixed|null
+     */
+    private function get_array_value_or_null(array $_array, string ...$_keys)
+    {
+        $temp = $_array;
+        foreach ($_keys as $key) {
+            if (!isset($temp[$key])) {
+                return null;
+            }
+
+            $temp = $temp[$key];
+        }
+
+        return $temp;
+    }
 }
