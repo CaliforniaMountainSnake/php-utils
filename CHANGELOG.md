@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.7] - 2020-01-15
+### Added
+- Added the Utils class that contains all util traits. Sometimes you just need to have an object that can do all needed work without creating the own class.
+
 ## [1.0.6] - 2019-10-11
 ### Added
 - Added ArrayUtils::get_array_value_or_null() method.
@@ -45,3 +49,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Minimum php version has been reduced from 7.3.1 to 7.1.
 - Composer dependencies has been updated.
 - Source code files have been formatted.
+
+[1.0.7]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.6...1.0.7
+[1.0.6]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.5...1.0.6
+[1.0.5]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.4...1.0.5
+[1.0.4]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.3...1.0.4
+[1.0.3]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.0...1.0.1
