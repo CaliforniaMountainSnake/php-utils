@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.8] - 2020-02-17
+### Added
+- Added the FileUtils trait with helpful methods: getDirectoryFiles(), getDirectoryFilesRecursive(), deleteDirectoryRecursively(), runInTempDir(), createTempDir().
+- Added the unit test for the FileUtils.
+
 ## [1.0.7] - 2020-01-15
 ### Added
 - Added the Utils class that contains all util traits. Sometimes you just need to have an object that can do all needed work without creating the own class.
@@ -50,6 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Composer dependencies has been updated.
 - Source code files have been formatted.
 
+[1.0.8]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.7...1.0.8
 [1.0.7]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.6...1.0.7
 [1.0.6]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.4...1.0.5

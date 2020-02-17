@@ -3,6 +3,7 @@
 namespace CaliforniaMountainSnake\UtilTraits\UtilsClasses;
 
 use CaliforniaMountainSnake\UtilTraits\ArrayUtils;
+use CaliforniaMountainSnake\UtilTraits\FileUtils;
 use CaliforniaMountainSnake\UtilTraits\ProcessUtils;
 use CaliforniaMountainSnake\UtilTraits\StringUtils;
 
@@ -12,6 +13,7 @@ use CaliforniaMountainSnake\UtilTraits\StringUtils;
 class Utils
 {
     use ArrayUtils;
+    use FileUtils;
     use ProcessUtils;
     use StringUtils;
 }
