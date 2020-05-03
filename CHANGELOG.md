@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.9] - 2020-05-03
+### Added
+- Added a unit test for ArrayUtils::array_values_recursive().
+### Changed
+- ArrayUtils::array_values_recursive() method now accepts the second optional argument.
+
 ## [1.0.8] - 2020-02-17
 ### Added
 - Added the FileUtils trait with helpful methods: getDirectoryFiles(), getDirectoryFilesRecursive(), deleteDirectoryRecursively(), runInTempDir(), createTempDir().
@@ -55,6 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Composer dependencies has been updated.
 - Source code files have been formatted.
 
+[1.0.9]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.8...1.0.9
 [1.0.8]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.7...1.0.8
 [1.0.7]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.6...1.0.7
 [1.0.6]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.5...1.0.6

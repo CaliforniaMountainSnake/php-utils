@@ -58,14 +58,21 @@ trait ArrayUtils
      * Get all values of the multidimensional array.
      *
      * @param array $_arr
+     * @param bool  $_try_to_save_keys Try to save keys? Default false.
+     *                                 It is impossible if the array contains duplicate keys somewhere in nested arrays.
+     *                                 And leads to data loss.
      *
      * @return array
      */
-    public function array_values_recursive(array &$_arr): array
+    public function array_values_recursive(array &$_arr, bool $_try_to_save_keys = false): array
     {
         $result = [];
-        \array_walk_recursive($_arr, static function (&$value, &$key) use (&$result) {
-            $result[$key] = $value;
+        \array_walk_recursive($_arr, static function (&$value, &$key) use (&$result, $_try_to_save_keys) {
+            if ($_try_to_save_keys) {
+                $result[$key] = $value;
+            } else {
+                $result[] = $value;
+            }
         });
 
         return $result;
