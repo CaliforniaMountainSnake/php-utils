@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.10] - 2020-05-03
+### Added
+- Added ArrayUtils::stringify_array() method.
+### Changed
+- ArrayUtils::array_keys_recursive() method now accepts the second optional argument.
+
 ## [1.0.9] - 2020-05-03
 ### Added
 - Added a unit test for ArrayUtils::array_values_recursive().
@@ -61,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Composer dependencies has been updated.
 - Source code files have been formatted.
 
+[1.0.10]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.9...1.0.10
 [1.0.9]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.8...1.0.9
 [1.0.8]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.7...1.0.8
 [1.0.7]: https://github.com/CaliforniaMountainSnake/php-utils/compare/1.0.6...1.0.7

@@ -39,4 +39,27 @@ class ArrayUtilsTest extends TestCase
             'some associative key' => 'some associative value',
         ], $this->array_values_recursive($inputArray, true));
     }
+
+    /**
+     * @covers ArrayUtils::stringify_array
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStringifyArray(): void
+    {
+        $inputArray = [
+            3 => new class
+            {
+                public function __toString(): string
+                {
+                    return 'class to string';
+                }
+            },
+            5 => 22442,
+        ];
+
+        $this->assertEquals([
+            3 => 'class to string',
+            5 => '22442',
+        ], $this->stringify_array($inputArray));
+    }
 }

@@ -13,7 +13,7 @@ trait ArrayUtils
      *
      * @return void
      */
-    protected function modify_array_recursive(array &$_array, callable $_callback): void
+    public function modify_array_recursive(array &$_array, callable $_callback): void
     {
         $keys = \array_keys($_array);
         foreach ($keys as $keyIndex => $key) {
@@ -41,14 +41,21 @@ trait ArrayUtils
      * Get all keys of the multidimensional array.
      *
      * @param array $_arr
+     * @param bool  $_try_to_save_keys Try to save keys? Default false.
+     *                                 It is impossible if the array contains duplicate keys somewhere in nested arrays.
+     *                                 And leads to data loss.
      *
      * @return array
      */
-    public function array_keys_recursive(array &$_arr): array
+    public function array_keys_recursive(array &$_arr, bool $_try_to_save_keys = false): array
     {
         $result = [];
-        \array_walk_recursive($_arr, static function (&$value, &$key) use (&$result) {
-            $result[$key] = $key;
+        \array_walk_recursive($_arr, static function (&$value, &$key) use (&$result, $_try_to_save_keys) {
+            if ($_try_to_save_keys) {
+                $result[$key] = $key;
+            } else {
+                $result[] = $key;
+            }
         });
 
         return $result;
@@ -79,6 +86,20 @@ trait ArrayUtils
     }
 
     /**
+     * Convert all array values to string.
+     * You must use only one dimensional array!
+     * This function saves keys of the original array.
+     *
+     * @param array $_arr
+     *
+     * @return string[]
+     */
+    public function stringify_array(array &$_arr): array
+    {
+        return \array_map('strval', $_arr);
+    }
+
+    /**
      * Recursive \implode().
      *
      * @param string $_glue
@@ -86,7 +107,7 @@ trait ArrayUtils
      *
      * @return string
      */
-    protected function implode_recursive(string $_glue, array $_arr): string
+    public function implode_recursive(string $_glue, array $_arr): string
     {
         $result = '';
 
@@ -112,7 +133,7 @@ trait ArrayUtils
      *
      * @return bool
      */
-    protected function in_array_recursive($_needle, array $_haystack, bool $_strict = false): bool
+    public function in_array_recursive($_needle, array $_haystack, bool $_strict = false): bool
     {
         foreach ($_haystack as $item) {
             /** @noinspection TypeUnsafeComparisonInspection */
@@ -135,7 +156,7 @@ trait ArrayUtils
      *
      * @return array|mixed|null
      */
-    private function get_array_value_or_null(array $_array, string ...$_keys)
+    public function get_array_value_or_null(array $_array, string ...$_keys)
     {
         $temp = $_array;
         foreach ($_keys as $key) {
