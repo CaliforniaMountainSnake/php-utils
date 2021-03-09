@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.11] - 2021-03-09
+### Fixed
+- symfony/process dependency has been moved to the require-dev section.
+
 ## [1.0.10] - 2020-05-03
 ### Added
 - Added ArrayUtils::stringify_array() method.
